@@ -1,0 +1,12 @@
+model,params,train_hours_mean,inference_ms_mean,peak_vram_mean
+dynamic_lstmgnn_gat,337922,0.0348,0.0,0.0787
+dynamic_lstmgnn_mpnn,610626,0.049,0.0,0.0841
+gnn_gat,820737,0.0302,0.0,2.2218
+lstmgnn_mpnn,819650,0.0666,0.0,2.0407
+bilstm,249281,0.0122,0.0,2.01
+graphgps,1279112,0.1978,0.0,12.7369
+lstmgnn_sage,265922,0.0523,0.0,2.1737
+lstmgnn_gat,546946,0.0837,0.0,2.2545
+dynamic_lstmgnn_gcn,48706,0.0437,0.0,0.0744
+mamba,692865,0.0091,0.0,0.356
+mamba_gps,2570028,0.2085,0.0,17.8627

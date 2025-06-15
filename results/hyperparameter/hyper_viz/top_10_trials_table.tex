@@ -1,0 +1,24 @@
+
+\begin{table}[h!]
+\centering
+\caption{Top 10 Hyperparameter Configurations for S²G-Net ICU LOS Prediction}
+\label{tab:top_trials}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{c|cccc|cccc}
+\toprule
+\textbf{Rank} & \textbf{Mamba Dim} & \textbf{Mamba Layers} & \textbf{GPS Layers} & \textbf{Fusion α} & \textbf{R²} & \textbf{MSE} & \textbf{MAD} & \textbf{Kappa} \\
+\midrule
+1 & 128 & 4 & 3 & 0.70 & 0.3849 & 0.263 & 0.390 & 0.3515 \\
+2 & 128 & 2 & 3 & 0.30 & 0.3845 & 0.263 & 0.391 & 0.3512 \\
+3 & 128 & 2 & 3 & 0.30 & 0.3755 & 0.266 & 0.394 & 0.3543 \\
+4 & 128 & 2 & 3 & 0.30 & 0.3738 & 0.267 & 0.395 & 0.3471 \\
+5 & 64 & 3 & 4 & 0.70 & 0.3736 & 0.267 & 0.393 & 0.3614 \\
+6 & 128 & 4 & 3 & 0.70 & 0.3715 & 0.268 & 0.392 & 0.3521 \\
+7 & 128 & 2 & 3 & 0.30 & 0.3712 & 0.268 & 0.396 & 0.3479 \\
+8 & 256 & 4 & 2 & 0.70 & 0.3696 & 0.269 & 0.403 & 0.2910 \\
+9 & 128 & 3 & 4 & 0.70 & 0.3694 & 0.269 & 0.394 & 0.3526 \\
+10 & 128 & 2 & 3 & 0.30 & 0.3668 & 0.270 & 0.392 & 0.3563 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
