@@ -1,0 +1,56 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Ignore all contents in the data directory (raw or intermediate datasets)
+data/
+
+# Ignore graphs subdirectory only
+graph/graphs/
+
+# Ignore all results (model outputs, metrics, figures, etc.)
+results/
+
+# Ignore compiled C/C++/Fortran objects (if applicable)
+*.o
+*.so
+*.mod
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE settings
+.vscode/
+.idea/
+
+# Logs and output
+*.log
+*.out
+*.err
+
+# Misc: temporary or swap files
+*.tmp
+*.swp
+*.bak
+
+# Model checkpoints or binary data
+*.ckpt
+*.h5
+*.pt
+*.pth
+*.npy
+*.npz
+*.pkl
+*.joblib
+
+# Local config or paths
+paths.json
