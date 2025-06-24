@@ -13,7 +13,7 @@ import colorsys
 # Set publication-quality defaults
 plt.style.use('seaborn-v0_8-whitegrid')
 plt.rcParams.update({
-    'font.family': 'sans-serif', 
+    'font.family': 'sans-serif',
     'font.sans-serif': ['DejaVu Sans', 'Helvetica', 'Arial'],  # Fallback fonts
     'font.size': 8,
     'axes.labelsize': 10,
@@ -42,6 +42,7 @@ plt.rcParams.update({
 save_dir = 'results/ablations/ablations_viz'
 os.makedirs(save_dir, exist_ok=True)
 
+
 # Define color palette based on your image
 def lighten_color(color, amount=0.05):
     """Lighten a color by mixing with white"""
@@ -51,78 +52,95 @@ def lighten_color(color, amount=0.05):
     c = colorsys.rgb_to_hls(*mc.to_rgb(c))
     return colorsys.hls_to_rgb(c[0], min(1, c[1] + amount), c[2])
 
+
 color_palette = {
     # Temporal - Blue series (lightened)
     'temporal_1': '#5A8CA4',  # was #4A7C94
     'temporal_2': '#8AC8E3',  # was #7AB8D3
     'temporal_3': '#B8E5F5',  # was #A8D5E5
-    
+
     # Feature - Green series (lightened)
     'feature_1': '#3E8D42',  # was #2E7D32
     'feature_2': '#5CBF60',  # was #4CAF50
     'feature_3': '#91D794',  # was #81C784
-    
+
     # Architecture - Yellow/Orange series (lightened)
     'arch_1': '#FFAC73',  # was #F39C63
     'arch_2': '#FFCA73',  # was #FAB763
-    
+
     # Graph - Red series (lightened)
     'graph_1': '#E33F3F',  # was #D32F2F
     'graph_2': '#F86D5E',  # was #E85D4E
     'graph_3': '#FF6360',  # was #EF5350
-    
+
     # Baseline
     'baseline': '#434343'  # was #333333
 }
 
 softer_colors = {
     'temporal_2': '#A5D3E8',  # Even softer blue
-    'feature_1': '#5E9D62',   # Softer green 1
-    'feature_2': '#7CCF80',   # Softer green 2
-    'feature_3': '#A1E7A4',   # Softer green 3
-    'graph_2': '#FF8D7E',     # Softer red
-    'baseline': '#636363'     # Softer baseline
+    'feature_1': '#5E9D62',  # Softer green 1
+    'feature_2': '#7CCF80',  # Softer green 2
+    'feature_3': '#A1E7A4',  # Softer green 3
+    'graph_2': '#FF8D7E',  # Softer red
+    'baseline': '#636363'  # Softer baseline
 }
 
 # Nature-style color palette (colorblind-friendly) - keeping as backup
 nature_colors = {
-    'blue': '#0173B2',      # Baseline/primary
-    'orange': '#DE8F05',    # Temporal
-    'green': '#029E73',     # Feature  
-    'red': '#CC78BC',       # Architecture
-    'purple': '#949494',    # Graph
-    'gray': '#656565'       # Reference
+    'blue': '#0173B2',  # Baseline/primary
+    'orange': '#DE8F05',  # Temporal
+    'green': '#029E73',  # Feature
+    'red': '#CC78BC',  # Architecture
+    'purple': '#949494',  # Graph
+    'gray': '#656565'  # Reference
 }
 
 # Your data
 ablation_results = {
-    'baseline': {'kappa': 0.4804, 'mad': 0.3845, 'mape': 51.7904, 'mse': 0.2522, 'msle': 0.0482, 'r2': 0.4167},
-    'last6h': {'kappa': 0.3107, 'mad': 0.7271, 'mape': 66.9041, 'mse': 0.8057, 'msle': 0.2435, 'r2': -0.8637},
-    'last24h': {'kappa': 0.4604, 'mad': 0.4358, 'mape': 53.3158, 'mse': 0.3347, 'msle': 0.0756, 'r2': 0.2257},
-    'full48h': {'kappa': 0.4809, 'mad': 0.3846, 'mape': 51.8053, 'mse': 0.2522, 'msle': 0.0482, 'r2': 0.4166},
-    'remove_physio': {'kappa': 0.4232, 'mad': 0.4179, 'mape': 63.2303, 'mse': 0.2870, 'msle': 0.0570, 'r2': 0.3360},
-    'remove_vitals': {'kappa': 0.4318, 'mad': 0.4069, 'mape': 55.8616, 'mse': 0.2775, 'msle': 0.0533, 'r2': 0.3581},
-    'remove_ethnicity': {'kappa': 0.4738, 'mad': 0.3880, 'mape': 54.1181, 'mse': 0.2534, 'msle': 0.0491, 'r2': 0.4138},
-    'static_only': {'kappa': -0.0021, 'mad': 1.0157, 'mape': 82.5961, 'mse': 1.5264, 'msle': 0.4596, 'r2': -2.5308},
-    'no_static': {'kappa': 0.0000, 'mad': 0.8189, 'mape': 62.9826, 'mse': 1.0872, 'msle': 0.2467, 'r2': -1.5148},
-    'drop_edges_30': {'kappa': 0.4806, 'mad': 0.3845, 'mape': 51.8050, 'mse': 0.2522, 'msle': 0.0482, 'r2': 0.4167},
-    'drop_edges_50': {'kappa': 0.4801, 'mad': 0.3845, 'mape': 51.7829, 'mse': 0.2522, 'msle': 0.0482, 'r2': 0.4166},
-    'drop_edges_70': {'kappa': 0.4796, 'mad': 0.3845, 'mape': 51.8347, 'mse': 0.2521, 'msle': 0.0482, 'r2': 0.4167}
+    'baseline': {'r2': 0.411, 'kappa': 0.357, 'mse': 0.252, 'msle': 0.225, 'mad': 0.385, 'mape': 40.77},
+
+    # Temporal Window Analysis
+    'last6h': {'r2': 0, 'kappa': 0, 'mse': 0.670, 'msle': 0.399, 'mad': 0.654, 'mape': 65.07},
+    'last24h': {'r2': 0.348, 'kappa': 0.315, 'mse': 0.282, 'msle': 0.258, 'mad': 0.405, 'mape': 42.64},
+    'full48h': {'r2': 0.411, 'kappa': 0.357, 'mse': 0.252, 'msle': 0.225, 'mad': 0.385, 'mape': 40.77},
+
+    # Feature Group Impact
+    'remove_physio': {'r2': 0.350, 'kappa': 0.291, 'mse': 0.281, 'msle': 0.256, 'mad': 0.416, 'mape': 45.41},
+    'remove_vitals': {'r2': 0.373, 'kappa': 0.318, 'mse': 0.271, 'msle': 0.232, 'mad': 0.402, 'mape': 42.89},
+    'remove_ethnicity': {'r2': 0.409, 'kappa': 0.356, 'mse': 0.255, 'msle': 0.226, 'mad': 0.385, 'mape': 40.94},
+
+    # Modality Analysis
+    'static_only': {'r2': 0, 'kappa': 0, 'mse': 1.513, 'msle': 0.448, 'mad': 1.021, 'mape': 80.87},
+    'no_static': {'r2': 0, 'kappa': 0, 'mse': 0.851, 'msle': 0.368, 'mad': 0.679, 'mape': 67.09},
+
+    # Graph Robustness
+    'drop_edges_30': {'r2': 0.411, 'kappa': 0.356, 'mse': 0.255, 'msle': 0.226, 'mad': 0.385, 'mape': 41.26},
+    'drop_edges_50': {'r2': 0.402, 'kappa': 0.346, 'mse': 0.263, 'msle': 0.229, 'mad': 0.393, 'mape': 41.83},
+    'drop_edges_70': {'r2': 0.385, 'kappa': 0.327, 'mse': 0.277, 'msle': 0.236, 'mad': 0.412, 'mape': 42.79}
 }
 
 ablation_stds = {
-    'baseline': {'kappa': 0.0008, 'mad': 0.0000, 'mape': 0.0168, 'mse': 0.0000, 'msle': 0.0000, 'r2': 0.0001},
-    'last6h': {'kappa': 0.0008, 'mad': 0.0001, 'mape': 0.2036, 'mse': 0.0004, 'msle': 0.0002, 'r2': 0.0009},
-    'last24h': {'kappa': 0.0008, 'mad': 0.0001, 'mape': 0.0273, 'mse': 0.0001, 'msle': 0.0000, 'r2': 0.0001},
-    'full48h': {'kappa': 0.0005, 'mad': 0.0000, 'mape': 0.0120, 'mse': 0.0000, 'msle': 0.0000, 'r2': 0.0001},
-    'remove_physio': {'kappa': 0.0008, 'mad': 0.0000, 'mape': 0.0291, 'mse': 0.0000, 'msle': 0.0000, 'r2': 0.0001},
-    'remove_vitals': {'kappa': 0.0005, 'mad': 0.0000, 'mape': 0.0221, 'mse': 0.0000, 'msle': 0.0000, 'r2': 0.0001},
-    'remove_ethnicity': {'kappa': 0.0005, 'mad': 0.0000, 'mape': 0.0049, 'mse': 0.0000, 'msle': 0.0000, 'r2': 0.0001},
-    'static_only': {'kappa': 0.0043, 'mad': 0.1760, 'mape': 14.7185, 'mse': 0.3160, 'msle': 0.1515, 'r2': 0.7311},
-    'no_static': {'kappa': 0.0000, 'mad': 0.0000, 'mape': 0.0016, 'mse': 0.0000, 'msle': 0.0000, 'r2': 0.0001},
-    'drop_edges_30': {'kappa': 0.0006, 'mad': 0.0000, 'mape': 0.0048, 'mse': 0.0000, 'msle': 0.0000, 'r2': 0.0001},
-    'drop_edges_50': {'kappa': 0.0004, 'mad': 0.0000, 'mape': 0.0305, 'mse': 0.0000, 'msle': 0.0000, 'r2': 0.0001},
-    'drop_edges_70': {'kappa': 0.0006, 'mad': 0.0000, 'mape': 0.0066, 'mse': 0.0000, 'msle': 0.0000, 'r2': 0.0000}
+    'baseline': {'r2': 0.005, 'kappa': 0.007, 'mse': 0.003, 'msle': 0.001, 'mad': 0.002, 'mape': 0.341},
+
+    # Temporal Window Analysis
+    'last6h': {'r2': 0, 'kappa': 0, 'mse': 0.012, 'msle': 0.013, 'mad': 0.023, 'mape': 0.429},
+    'last24h': {'r2': 0.002, 'kappa': 0.001, 'mse': 0.003, 'msle': 0.004, 'mad': 0.003, 'mape': 0.473},
+    'full48h': {'r2': 0.005, 'kappa': 0.007, 'mse': 0.003, 'msle': 0.001, 'mad': 0.002, 'mape': 0.341},
+
+    # Feature Group Impact
+    'remove_physio': {'r2': 0.017, 'kappa': 0.001, 'mse': 0.000, 'msle': 0.005, 'mad': 0.005, 'mape': 0.793},
+    'remove_vitals': {'r2': 0.009, 'kappa': 0.001, 'mse': 0.000, 'msle': 0.006, 'mad': 0.003, 'mape': 0.557},
+    'remove_ethnicity': {'r2': 0.004, 'kappa': 0.001, 'mse': 0.003, 'msle': 0.002, 'mad': 0.003, 'mape': 0.472},
+
+    # Modality Analysis
+    'static_only': {'r2': 0, 'kappa': 0, 'mse': 0.198, 'msle': 0.095, 'mad': 0.112, 'mape': 3.685},
+    'no_static': {'r2': 0, 'kappa': 0, 'mse': 0.019, 'msle': 0.045, 'mad': 0.031, 'mape': 1.431},
+
+    # Graph Robustness
+    'drop_edges_30': {'r2': 0.004, 'kappa': 0.003, 'mse': 0.001, 'msle': 0.010, 'mad': 0.002, 'mape': 0.524},
+    'drop_edges_50': {'r2': 0.008, 'kappa': 0.002, 'mse': 0.005, 'msle': 0.001, 'mad': 0.001, 'mape': 0.812},
+    'drop_edges_70': {'r2': 0.023, 'kappa': 0.003, 'mse': 0.003, 'msle': 0.002, 'mad': 0.004, 'mape': 0.792}
 }
 
 # Categorize ablations
@@ -159,6 +177,7 @@ metric_labels = {
     'r2': 'R² Score'
 }
 
+
 def create_metrics_heatmap():
     # Prepare data matrix
     ablations = list(ablation_results.keys())
@@ -175,7 +194,7 @@ def create_metrics_heatmap():
 
     # Build a white-to-blue colormap using the same blue as 'last6h'
     from matplotlib.colors import LinearSegmentedColormap
-    
+
     cmap = LinearSegmentedColormap.from_list(
         'gradient',
         ['#d7e1eb', '#afc3d8', color_palette['temporal_1']]
@@ -222,25 +241,27 @@ fig, axes = plt.subplots(2, 3, figsize=(15, 8))
 axes = axes.flatten()
 
 metric_subtitles = [
-    'R² Score',                       # A
-    "Kappa",                          # B
-    'Mean-Squared Error',             # C
-    'Mean Absolute Deviation',        # D
-    'Mean Absolute Percentage Error', # E
-    'Mean-Squared Log Error'          # F
+    'R² Score',  # A
+    "Kappa",  # B
+    'Mean-Squared Error',  # C
+    'Mean Absolute Deviation',  # D
+    'Mean Absolute Percentage Error',  # E
+    'Mean-Squared Log Error'  # F
 ]
 
+
 def annotate_subplot(ax, letter, subtitle, pad=5):
-        ax.text(0.5, 1.08, f"({letter}) {subtitle}",
+    ax.text(0.5, 1.08, f"({letter}) {subtitle}",
             transform=ax.transAxes,
-            fontsize=13, 
+            fontsize=13,
             va='bottom', ha='center')
+
 
 for idx, (ax, sub) in enumerate(zip(axes, metric_subtitles)):
     annotate_subplot(ax, chr(97 + idx), sub)
 
-
 all_metrics = ['r2', 'kappa', 'mse', 'mad', 'mape', 'msle']
+
 
 # Color mapping function with gradient colors
 def get_color(abl):
@@ -271,42 +292,43 @@ def get_color(abl):
     else:
         return '#666666'
 
+
 for idx, metric in enumerate(all_metrics):
     ax = axes[idx]
-    
+
     # Prepare data
     x_labels = []
     values = []
     errors = []
     colors_list = []
-    
+
     # Add all ablations
     for abl in ablation_results.keys():
         x_labels.append(ablation_labels[abl])
         values.append(ablation_results[abl][metric])
         errors.append(ablation_stds[abl][metric])
         colors_list.append(get_color(abl))
-    
+
     # Create bar plot
     x_pos = np.arange(len(x_labels))
-    bars = ax.bar(x_pos, values, yerr=errors, capsize=4, 
-                   color=colors_list, edgecolor='black', linewidth=0.5,
-                   error_kw={'linewidth': 1, 'ecolor': 'black'})
-    
+    bars = ax.bar(x_pos, values, yerr=errors, capsize=4,
+                  color=colors_list, edgecolor='black', linewidth=0.5,
+                  error_kw={'linewidth': 1, 'ecolor': 'black'})
+
     # Add baseline line
-    ax.axhline(y=ablation_results['baseline'][metric], 
+    ax.axhline(y=ablation_results['baseline'][metric],
                color='black', linestyle='--', alpha=0.5, linewidth=1)
-    
+
     # Formatting
     ax.set_xlabel('')
-    ax.set_ylabel(metric_labels[metric], fontsize=12) 
+    ax.set_ylabel(metric_labels[metric], fontsize=12)
     ax.set_xticks(x_pos)
     ax.set_xticklabels(x_labels, rotation=45, ha='right', fontsize=11)  # Increased label size
-    
+
     # Add significance stars (positioned higher to avoid overlap)
     baseline_val = ablation_results['baseline'][metric]
     baseline_std = ablation_stds['baseline'][metric]
-    
+
     for i, (val, err) in enumerate(zip(values[1:], errors[1:]), 1):
         # Simple significance test (2 std rule)
         if abs(val - baseline_val) > 2 * (baseline_std + err):
@@ -325,8 +347,8 @@ handles = [
 
 # Position legend above plots with light gray box
 legend = fig.legend(handles=handles, loc='upper center', bbox_to_anchor=(0.5, 1),
-                   ncol=5, frameon=True, columnspacing=2, fontsize=12,  # Increased font size
-                edgecolor='#E0E0E0', framealpha=0.9)  # Light gray box
+                    ncol=5, frameon=True, columnspacing=2, fontsize=12,  # Increased font size
+                    edgecolor='#E0E0E0', framealpha=0.9)  # Light gray box
 legend.get_frame().set_linewidth(0.5)  # Thin border
 
 plt.tight_layout()
@@ -368,7 +390,7 @@ for i, cat in enumerate(categories):
 # Plot bars
 for i, cat_name in enumerate(categories):
     drops, labels = performance_drops[cat_name]
-    
+
     # Use gradient colors for each category
     if cat_name == 'Temporal':
         cat_colors = [color_palette['temporal_1'], color_palette['temporal_2'], color_palette['temporal_3']]
@@ -378,11 +400,11 @@ for i, cat_name in enumerate(categories):
         cat_colors = [color_palette['arch_1'], color_palette['arch_2']]
     else:  # Graph
         cat_colors = [color_palette['graph_1'], color_palette['graph_2'], color_palette['graph_3']]
-    
+
     # Plot bars for this category
     for j, (drop, label) in enumerate(zip(drops, labels)):
         x_pos = group_positions[i] + j * bar_width
-        ax.bar(x_pos, drop, bar_width, label=label, 
+        ax.bar(x_pos, drop, bar_width, label=label,
                color=cat_colors[j % len(cat_colors)],
                edgecolor='black', linewidth=0.5)
 
@@ -412,15 +434,15 @@ fig, axes = plt.subplots(2, 3, figsize=(14, 6))
 # Panel A: Time window effect (R²)
 ax = axes[0, 0]
 time_windows = [6, 24, 48]
-time_r2 = [ablation_results['last6h']['r2'], 
+time_r2 = [ablation_results['last6h']['r2'],
            ablation_results['last24h']['r2'],
            ablation_results['full48h']['r2']]
-           
+
 ax.set_title('(a) Effect of Time Window on R²', fontsize=13)
-ax.plot(time_windows, time_r2, marker='o', markersize=6, 
+ax.plot(time_windows, time_r2, marker='o', markersize=6,
         color=softer_colors['temporal_2'], linewidth=2, linestyle='--',  # Dashed and thicker
         markeredgecolor='black', markeredgewidth=0.5)
-ax.axhline(y=ablation_results['baseline']['r2'], 
+ax.axhline(y=ablation_results['baseline']['r2'],
            color=softer_colors['baseline'], linestyle='--', linewidth=0.5)
 ax.set_ylabel('R² Score', fontsize=11)
 ax.set_xlim(0, 54)
@@ -438,9 +460,9 @@ feature_r2_drop = [
 
 x_pos = np.arange(len(features))
 ax.set_title('(b) Static Feature Importance (R²)', fontsize=13)
-bars = ax.bar(x_pos, feature_r2_drop, 
-               color=[softer_colors['feature_1'], softer_colors['feature_2'], softer_colors['feature_3']],
-               edgecolor='black', linewidth=0.5, width=0.6)
+bars = ax.bar(x_pos, feature_r2_drop,
+              color=[softer_colors['feature_1'], softer_colors['feature_2'], softer_colors['feature_3']],
+              edgecolor='black', linewidth=0.5, width=0.6)
 
 # Add value labels
 for i, v in enumerate(feature_r2_drop):
@@ -460,10 +482,10 @@ drop_r2 = [ablation_results['drop_edges_30']['r2'],
            ablation_results['drop_edges_70']['r2']]
 
 ax.set_title('(c) Graph Edge Removal Impact on R²', fontsize=13)
-ax.plot(drop_rates, drop_r2, marker='s', markersize=6, 
+ax.plot(drop_rates, drop_r2, marker='s', markersize=6,
         color=softer_colors['graph_2'], linewidth=2, linestyle='--',  # Dashed and thicker
         markeredgecolor='black', markeredgewidth=0.5)
-ax.axhline(y=ablation_results['baseline']['r2'], 
+ax.axhline(y=ablation_results['baseline']['r2'],
            color=softer_colors['baseline'], linestyle='--', linewidth=0.5)
 ax.set_ylabel('R² Score', fontsize=11)
 ax.set_xlim(20, 80)
@@ -473,15 +495,15 @@ ax.grid(True, alpha=0.3)
 # Second row: MSE
 # Panel D: Time window effect (MSE)
 ax = axes[1, 0]
-time_mse = [ablation_results['last6h']['mse'], 
+time_mse = [ablation_results['last6h']['mse'],
             ablation_results['last24h']['mse'],
             ablation_results['full48h']['mse']]
 
 ax.set_title('(d) Effect of Time Window on MSE', fontsize=13)
-ax.plot(time_windows, time_mse, marker='o', markersize=6, 
+ax.plot(time_windows, time_mse, marker='o', markersize=6,
         color=softer_colors['temporal_2'], linewidth=2, linestyle='--',  # Dashed and thicker
         markeredgecolor='black', markeredgewidth=0.5)
-ax.axhline(y=ablation_results['baseline']['mse'], 
+ax.axhline(y=ablation_results['baseline']['mse'],
            color=softer_colors['baseline'], linestyle='--', linewidth=0.5)
 ax.set_xlabel('Time Window (h)', fontsize=11)
 ax.set_ylabel('MSE', fontsize=11)
@@ -498,9 +520,9 @@ feature_mse_increase = [
 ]
 
 ax.set_title('(e) Static Feature Impact (MSE)', fontsize=13)
-bars = ax.bar(x_pos, feature_mse_increase, 
-               color=[softer_colors['feature_1'], softer_colors['feature_2'], softer_colors['feature_3']],
-               edgecolor='black', linewidth=0.5, width=0.6)
+bars = ax.bar(x_pos, feature_mse_increase,
+              color=[softer_colors['feature_1'], softer_colors['feature_2'], softer_colors['feature_3']],
+              edgecolor='black', linewidth=0.5, width=0.6)
 
 # Add value labels
 for i, v in enumerate(feature_mse_increase):
@@ -520,10 +542,10 @@ drop_mse = [ablation_results['drop_edges_30']['mse'],
             ablation_results['drop_edges_70']['mse']]
 
 ax.set_title('(f) Graph Edge Removal Impact on MSE', fontsize=13)
-ax.plot(drop_rates, drop_mse, marker='s', markersize=6, 
+ax.plot(drop_rates, drop_mse, marker='s', markersize=6,
         color=softer_colors['graph_2'], linewidth=2, linestyle='--',  # Dashed and thicker
         markeredgecolor='black', markeredgewidth=0.5)
-ax.axhline(y=ablation_results['baseline']['mse'], 
+ax.axhline(y=ablation_results['baseline']['mse'],
            color=softer_colors['baseline'], linestyle='--', linewidth=0.5)
 ax.set_xlabel('Edge Drop Rate (%)', fontsize=11)
 ax.set_ylabel('MSE', fontsize=11)

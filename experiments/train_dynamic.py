@@ -17,8 +17,8 @@ from src.config.args import init_lstmgnn_args, add_configs
 from src.utils import write_json, write_pkl
 from src.utils import record_results
 from pytorch_lightning.callbacks import EarlyStopping
-from src.tracking.runtime import RuntimeTracker, measure_inference_speed
-from src.tracking.params import analyze_model_complexity
+from src.evaluation.tracking.runtime import RuntimeTracker, measure_inference_speed
+from src.evaluation.tracking.params import analyze_model_complexity
 import json, time
 
 early_stop_callback = EarlyStopping(
