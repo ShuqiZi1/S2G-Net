@@ -1,0 +1,8 @@
+{
+    "MIMIC_path": "data/MIMIC/",
+    "log_path": "results/logs/",
+    "data_dir": "data/data_loader/",
+    "graph_dir": "graph/graphs/",
+    "ray_dir": "results/ray_results/",
+    "ablate_results": "results/ablations/"
+}
