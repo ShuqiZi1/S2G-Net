@@ -71,10 +71,12 @@ def get_percentile_bin(x, edges):
             return i
     return len(edges) - 2
 
-
 def mean_absolute_percentage_error(y_true, y_pred):
-    return np.mean(np.abs((y_true - y_pred) / np.maximum(4/24, y_true))) * 100
+    y_true_log = np.log1p(y_true)
+    y_pred_log = np.log1p(y_pred)
 
+    denom = np.maximum(1e-8, np.abs(y_true_log))
+    return np.mean(np.abs((y_true_log - y_pred_log) / denom)) * 100
 
 def mean_squared_logarithmic_error(y_true, y_pred):
     """Standard MSLE = mean( (log(1 + y_true) - log(1 + y_pred))^2 )"""
