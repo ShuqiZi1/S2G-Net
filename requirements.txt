@@ -30,6 +30,7 @@ shap>=0.43,<0.45
 captum>=0.7
 networkx>=2.8
 umap-learn>=0.5
+xgboost>=1.7
 
 
 
