@@ -30,6 +30,7 @@ MODEL_CONFIGS = {
     'lstmgnn_mpnn': "python -m experiments.train_ns_lstmgnn --bilstm --ts_mask --add_flat --class_weights --gnn_name mpnn --add_diag --task los --read_best",
     'lstmgnn_sage': "python -m experiments.train_ns_lstmgnn --bilstm --ts_mask --add_flat --class_weights --gnn_name sage --add_diag --task los --read_best",
     'lstmgnn_gat': "python -m experiments.train_ns_lstmgnn --bilstm --ts_mask --add_flat --class_weights --gnn_name gat --add_diag --task los --read_best",
+    'xgb': "python -m experiments.train_xgb --model xgboost --ts_mask --add_flat --add_diag --task los",
     
     'mamba_gps': "python -m experiments.train_mamba_gps_enhgraph --model mamba-gps --ts_mask --add_flat --class_weights --add_diag --task los --read_best --with_edge_types"
 }
@@ -43,7 +44,7 @@ BASELINE_MODELS = {
     'rnn','bilstm', 'transformer', 'mamba', 
     'gnn_gat', 'gnn_sage', 'gnn_mpnn', 'graphgps',
     'dynamic_lstmgnn_gcn', 'dynamic_lstmgnn_gat', 'dynamic_lstmgnn_mpnn',
-    'lstmgnn_mpnn', 'lstmgnn_sage', 'lstmgnn_gat',
+    'lstmgnn_mpnn', 'lstmgnn_sage', 'lstmgnn_gat', 'xgb',
 }
 
 OUR_MODELS = {'mamba_gps'}
