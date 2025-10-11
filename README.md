@@ -686,7 +686,7 @@ Our evaluation framework employs multiple regression metrics specifically chosen
 
 - **Clinical Metrics**:
   - **MAD**: Mean Absolute Deviation (robust to outliers)
-  - **MAPE**: Mean Absolute Percentage Error (relative accuracy)
+  - **log-MAPE**: Mean Absolute Percentage Error computed in log space (relative accuracy)
   - **Kappa**: Inter-rater agreement on discretized LOS bins (clinical relevance)
 
 - **Efficiency Metrics**:
