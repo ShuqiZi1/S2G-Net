@@ -136,7 +136,9 @@ def add_best_params(config):
         best = lstmgnn
     elif config['model'] == 'transformer':
         best = transformer_default
-
+    elif config['model'] == 'xgboost':
+        return
+    
     if best is None:
         raise ValueError(f"Invalid configuration: {config}")
 
@@ -205,7 +207,7 @@ def init_arguments():
 
     # Model
     parser.add_argument('--flat_nhid', type=int, default=64)
-    parser.add_argument('--model', type=str, choices=['lstm', 'rnn', 'transformer', 'lstmgnn', 'gnn', 'mamba', 'graphgps', 'mamba-gps'], default='lstmgnn')
+    parser.add_argument('--model', type=str, choices=['lstm', 'rnn', 'transformer', 'lstmgnn', 'gnn', 'mamba', 'graphgps', 'mamba-gps', 'xgboost'], default='lstmgnn')
     parser.add_argument('--batch_size', type=int, default=64)
     parser.add_argument('--fc_dim', type=int, default=32)
     parser.add_argument('--main_dropout', type=float, default=0.45)
@@ -515,7 +517,11 @@ def add_configs(config):
     
     # Basic hyperparameters setup
     config['verbose'] = config.get('verbose', False)
-    config['ns_sizes'] = f"{config['ns_size1'] + config['ns_size2']}_{config['ns_size1']}"
+    config.setdefault('g_version', 'default')
+    config.setdefault('dynamic_g', False)
+    ns1 = int(config.get('ns_size1', 25))
+    ns2 = int(config.get('ns_size2', 10))
+    config['ns_sizes'] = f"{ns1 + ns2}_{ns1}"
     config['flat_after'] = config['add_flat'] and (not config['flat_first'])
     config['read_lstm_emb'] = False
 
@@ -558,7 +564,7 @@ def add_configs(config):
         config['gps_node_dim'] = config['mamba_outdim']
         config['add_last_ts'] = True
         config['gps_out_dim'] = config.get('out_dim', 1)
-    elif 'lstm' or 'rnn' in config['model']:
+    elif ('lstm' in config['model']) or ('rnn' in config['model']):
         config['lstm_outdim'], config['lstm_last_ts_dim'] = get_lstm_out_dim(config)
         if config['model'] == 'lstmgnn':
             config['gnn_indim'] = config['lstm_outdim']
@@ -694,6 +700,8 @@ def add_configs(config):
                     config['log_path'] = str(Path(config['log_path']).resolve() / config['task'] / inputs / (config['model'] + '_pt') / dir_name)
                 else:    
                     config['log_path'] = str(Path(config['log_path']).resolve() / config['task'] / inputs / config['model'] / dir_name)
+        elif config['model'] == 'xgboost':
+            config['log_path'] = str(Path(config['log_path']).resolve() / config['task'] / inputs / 'xgboost')
         else:
             config['log_path'] = str(Path(config['log_path']).resolve() / config['task'] / inputs / 'lstm_baselines')
 
