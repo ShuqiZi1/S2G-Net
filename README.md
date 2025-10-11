@@ -79,6 +79,9 @@ torchvision==0.15.1
 torchaudio==2.0.1
 pytorch-lightning==1.4.9
 
+# Gradient-boosting / classical models
+xgboost>=1.7
+
 # Graph neural networks
 torch-geometric==2.6.1
 torch-scatter==2.1.2
@@ -380,7 +383,7 @@ python -m experiments.train_mamba_only \
 
 **RNN Baseline**:
 ```bash
-python -m train_ns_lstm \
+python -m experiments.train_ns_lstm \
     --model rnn \
     --ts_mask \
     --add_flat \
@@ -407,7 +410,7 @@ python -m experiments.train_ns_transformer \
 
 **BiLSTM Baseline**:
 ```bash
-python -m train_ns_lstm \
+python -m experiments.train_ns_lstm \
     --bilstm \
     --ts_mask \
     --add_flat \
@@ -432,7 +435,7 @@ python -m experiments.train_graphgps_only \
 **GNN Models** (with neighborhood sampling):
 ```bash
 # GNN with GAT
-python -m train_ns_gnn \
+python -m experiments.train_ns_gnn \
     --ts_mask \
     --add_flat \
     --class_weights \
@@ -442,7 +445,7 @@ python -m train_ns_gnn \
     --read_best
 
 # GNN with SAGE
-python -m train_ns_gnn \
+python -m experiments.train_ns_gnn \
     --ts_mask \
     --add_flat \
     --class_weights \
@@ -452,7 +455,7 @@ python -m train_ns_gnn \
     --read_best
 
 # GNN with MPNN
-python -m train_ns_gnn \
+python -m experiments.train_ns_gnn \
     --ts_mask \
     --add_flat \
     --class_weights \
@@ -466,7 +469,7 @@ python -m train_ns_gnn \
 **Dynamic LSTM-GNN Models**:
 ```bash
 # Dynamic LSTM-GNN with GCN
-python -m train_dynamic \
+python -m experiments.train_dynamic \
     --bilstm \
     --random_g \
     --ts_mask \
@@ -477,7 +480,7 @@ python -m train_dynamic \
     --read_best
 
 # Dynamic LSTM-GNN with GAT
-python -m train_dynamic \
+python -m experiments.train_dynamic \
     --bilstm \
     --random_g \
     --ts_mask \
@@ -488,7 +491,7 @@ python -m train_dynamic \
     --read_best
 
 # Dynamic LSTM-GNN with MPNN
-python -m train_dynamic \
+python -m experiments.train_dynamic \
     --bilstm \
     --random_g \
     --ts_mask \
@@ -502,7 +505,7 @@ python -m train_dynamic \
 **LSTM-GNN Models**:
 ```bash
 # LSTM-GNN with GAT
-python -m train_ns_lstmgnn \
+python -m experiments.train_ns_lstmgnn \
     --bilstm \
     --ts_mask \
     --add_flat \
@@ -513,7 +516,7 @@ python -m train_ns_lstmgnn \
     --read_best
 
 # LSTM-GNN with SAGE
-python -m train_ns_lstmgnn \
+python -m experiments.train_ns_lstmgnn \
     --bilstm \
     --ts_mask \
     --add_flat \
@@ -524,7 +527,7 @@ python -m train_ns_lstmgnn \
     --read_best
 
 # LSTM-GNN with MPNN
-python -m train_ns_lstmgnn \
+python -m experiments.train_ns_lstmgnn \
     --bilstm \
     --ts_mask \
     --add_flat \
@@ -533,6 +536,17 @@ python -m train_ns_lstmgnn \
     --add_diag \
     --task los \
     --read_best
+```
+
+**Traditional Machine Learning Model**:
+```
+# XGBoost 
+python -m experiments.train_xgb \
+    --model xgboost \
+    --ts_mask \
+    --add_flat \
+    --add_diag \
+    --task los 
 ```
 
 ### Key Training Parameters
