@@ -45,6 +45,8 @@ We provide implementations of several strong baseline methods for comprehensive 
 - **Dynamic LSTM-GNN** (`train_dynamic`): k-NN graph construction with LSTM-GNN
 - **GraphGPS** (`experiments.train_graphgps_only`): Transformer-based approach with dynamic graph updates
 
+### Traditional Machine Learning Model
+- **XGBoost** (`train_xgb`): Gradient Boosted Decision Tree model used as a classical, non-neural baseline
 
 ## License
 
